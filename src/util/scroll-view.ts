@@ -143,7 +143,9 @@ export class ScrollView {
         ev.velocityY = ev.velocityX = 0;
 
         // emit that the scroll has ended
-        self.scrollEnd.next(ev);
+        self.scrollEnd && self.scrollEnd.next(ev);
+
+        self._endTmr = null;
       }
 
       // emit on each scroll event
@@ -234,7 +236,7 @@ export class ScrollView {
             ev.velocityY = ev.velocityX = 0;
 
             // emit that the scroll has ended
-            self.scrollEnd.next(ev);
+            self.scrollEnd && self.scrollEnd.next(ev);
           }
         });
       }
@@ -289,7 +291,7 @@ export class ScrollView {
       if (!positions.length && self.isScrolling) {
         self.isScrolling = false;
         ev.velocityY = ev.velocityX = 0;
-        self.scrollEnd.next(ev);
+        self.scrollEnd && self.scrollEnd.next(ev);
         return;
       }
 
@@ -327,7 +329,7 @@ export class ScrollView {
       } else {
         self.isScrolling = false;
         ev.velocityY = 0;
-        self.scrollEnd.next(ev);
+        self.scrollEnd && self.scrollEnd.next(ev);
       }
 
       positions.length = 0;
@@ -509,12 +511,15 @@ export class ScrollView {
    * @private
    */
   destroy() {
-    this.scrollStart.unsubscribe();
-    this.scroll.unsubscribe();
-    this.scrollEnd.unsubscribe();
     this.stop();
+
     this._endTmr && this._endTmr();
     this._lsn && this._lsn();
+
+    this.scrollStart && this.scrollStart.unsubscribe();
+    this.scroll && this.scroll.unsubscribe();
+    this.scrollEnd && this.scrollEnd.unsubscribe();
+
     let ev = this.ev;
     ev.domWrite = ev.contentElement = ev.fixedElement = ev.scrollElement = ev.headerElement = null;
     this._lsn = this._el = this._dom = this.ev = ev = null;

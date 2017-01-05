@@ -306,8 +306,8 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    * @private
    */
   ngOnDestroy() {
-    this._form.deregister(this);
-    this._gesture.destroy();
+    this._form && this._form.deregister(this);
+    this._gesture && this._gesture.destroy();
     this._fn = null;
   }
 
