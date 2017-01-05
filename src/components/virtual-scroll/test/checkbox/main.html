@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Virtual Scroll{{webview}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="reload()">
+        Reload
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list [virtualScroll]="items">
+    <ion-item *virtualItem="let item">
+      <ion-label>{{item.value}}</ion-label>
+      <ion-checkbox></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
