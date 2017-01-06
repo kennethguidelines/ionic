@@ -17,6 +17,10 @@ describe('App', () => {
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
       let tab2 = mockTab(tabs);
+
+      tab1.root = 'Page1';
+      tab2.root = 'Page2';
+
       nav.registerChildNav(tabs);
 
       tabs.select(tab1);
