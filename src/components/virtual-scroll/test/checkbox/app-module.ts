@@ -8,11 +8,19 @@ import { IonicApp, IonicModule, Platform } from '../../../..';
 export class E2EPage {
   items: any[] = [];
   webview: string = '';
+  type: string = 'radio';
+  testCheck: boolean;
 
   constructor(plt: Platform) {
     for (var i = 0; i < 200; i++) {
+      if (i % 5 === 0) {
+        this.changeType();
+      }
+
       this.items.push({
-        value: i
+        value: i,
+        type: this.type,
+        class: `item-${i}`
       });
     }
 
@@ -26,6 +34,16 @@ export class E2EPage {
       } else {
         this.webview = ': iOS UIWebView';
       }
+    }
+  }
+
+  changeType() {
+    if (this.type === 'radio') {
+      this.type = 'checkbox';
+    } else if (this.type === 'checkbox') {
+      this.type = 'toggle';
+    } else {
+      this.type = 'radio';
     }
   }
 
