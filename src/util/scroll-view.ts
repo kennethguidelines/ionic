@@ -513,7 +513,7 @@ export class ScrollView {
   destroy() {
     this.stop();
 
-    this._endTmr && this._endTmr();
+    this._endTmr && this._dom.cancel(this._endTmr);
     this._lsn && this._lsn();
 
     this.scrollStart && this.scrollStart.unsubscribe();
