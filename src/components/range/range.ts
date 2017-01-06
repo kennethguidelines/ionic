@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isPresent, isTrueProperty } from '../../util/util';
@@ -313,7 +313,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
-    private _dom: DomController
+    private _dom: DomController,
+    private _cd: ChangeDetectorRef
   ) {
     super(config, elementRef, renderer, 'range');
     this._events = new UIEventManager(_plt);
@@ -617,6 +618,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   onChange(val: any) {
     // used when this input does not have an ngModel or formControlName
     this.onTouched();
+    this._cd.detectChanges();
   }
 
   /**

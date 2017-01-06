@@ -8,12 +8,12 @@ import { IonicApp, IonicModule, Platform } from '../../../..';
 export class E2EPage {
   items: any[] = [];
   webview: string = '';
-  type: string = 'radio';
+  type: string = 'range';
   testCheck: boolean;
 
   constructor(plt: Platform) {
     for (var i = 0; i < 200; i++) {
-      if (i % 5 === 0) {
+      if (i % 2 === 0) {
         this.changeType();
       }
 
@@ -38,12 +38,14 @@ export class E2EPage {
   }
 
   changeType() {
-    if (this.type === 'radio') {
+    if (this.type === 'range') {
       this.type = 'checkbox';
     } else if (this.type === 'checkbox') {
       this.type = 'toggle';
-    } else {
+    } else if (this.type === 'toggle') {
       this.type = 'radio';
+    } else {
+      this.type = 'range';
     }
   }
 

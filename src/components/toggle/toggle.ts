@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -123,7 +123,8 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
     private _haptic: Haptic,
     @Optional() public _item: Item,
     private _gestureCtrl: GestureController,
-    private _domCtrl: DomController
+    private _domCtrl: DomController,
+    private _cd: ChangeDetectorRef
   ) {
     super(config, elementRef, renderer, 'toggle');
     _form.register(this);
@@ -276,6 +277,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
     this._fn && this._fn(isChecked);
     this._setChecked(isChecked);
     this.onTouched();
+    this._cd.detectChanges();
   }
 
   /**
